@@ -22,19 +22,20 @@ class Gff3( Datatype ):
 
         # TODO: See if we need these temporary files as part of the generated files
         unsorted_genePred_file = tempfile.NamedTemporaryFile(bufsize=0, suffix=".genePred")
-        # unsortedBedFile = tempfile.NamedTemporaryFile(bufsize=0, suffix=".unsortedBed")
-        sorted_genePred_file = tempfile.NamedTemporaryFile(suffix=".sortedBed")
+        unsorted_bigGenePred_file = tempfile.NamedTemporaryFile(bufsize=0, suffix=".unsorted.bigGenePred")
+        sorted_biGenePred_file = tempfile.NamedTemporaryFile(suffix=".sorted.bigGenePred")
 
         # TODO: Refactor into another Class to manage the twoBitInfo and ChromSizes (same process as in Gtf.py)
 
         # gff3ToGenePred processing
         subtools.gff3ToGenePred(self.input_Gff3_false_path, unsorted_genePred_file.name)
 
-        # Sort processing
-        subtools.sort(unsorted_genePred_file.name, sorted_genePred_file.name)
+        # genePredToBigGenePred
+        subtools.genePredToBigGenePred(unsorted_genePred_file.name, unsorted_bigGenePred_file.name)
 
-        # genePredToBed processing
-        #subtools.genePredToBed(genePredFile.name, unsortedBedFile.name)
+        # Sort processing
+        # TODO: SORT ON THE BIGENEPRED NOW
+        subtools.sort(unsorted_bigGenePred_file.name, sorted_biGenePred_file.name)
 
         # TODO: Check if no errors
 
@@ -47,11 +48,12 @@ class Gff3( Datatype ):
         myBigBedFilePath = os.path.join(self.myTrackFolderPath, trackName)
 
         with open(myBigBedFilePath, 'w') as bigBedFile:
-            subtools.bedToBigBed(sorted_genePred_file.name,
+            subtools.bedToBigBed(sorted_biGenePred_file.name,
                                  self.chromSizesFile.name,
                                  bigBedFile.name,
                                  autoSql=auto_sql_option,
-                                 typeOption='-type=bed12+8')
+                                 typeOption='-type=bed12+8',
+                                 tab=True)
 
         # Create the Track Object
         self.createTrack(file_path=trackName,
