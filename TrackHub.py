@@ -108,8 +108,6 @@ class TrackHub(object):
 
         # If the group is already present, we don't need to add it
         if group_name in self.groups:
-            logging.debug("We DON'T add in {0} the group {1}".format(groupsTxtFilePath,
-                                                                      group_name))
             return
 
         # Append to trackDbTxtFilePath the trackDbTemplate populate with the newTrack object
@@ -120,8 +118,7 @@ class TrackHub(object):
                     label=group_name
             )
             groupFile.write(htmlMakoRendered)
-        logging.debug("We just added in {0} the group {1}".format(groupsTxtFilePath,
-                                                                  group_name))
+
         self.groups.add(group_name)
 
     def terminate(self):

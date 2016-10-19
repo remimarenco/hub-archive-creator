@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import logging
 import os
 import tempfile
 
@@ -29,7 +30,6 @@ class Gtf( Datatype ):
         # TODO: Think about how to avoid repetition of the group_name everywhere
         self.group_name = data_gtf["group_name"]
 
-        #print "Creating TrackHub GTF from (falsePath: %s; name: %s)" % ( self.input_gtf_false_path, self.name_gtf)
 
         # TODO: See if we need these temporary files as part of the generated files
         genePredFile = tempfile.NamedTemporaryFile(bufsize=0, suffix=".genePred")
@@ -77,11 +77,11 @@ class Gtf( Datatype ):
 
         # TODO: Use Logging instead of print
         if modified_gtf.is_modified:
-            print("- Warning: Gtf %s created with a modified version of your Gtf because of start/end coordinates issues."
+            logging.info("- Warning: Gtf %s created with a modified version of your Gtf because of start/end coordinates issues."
                   % self.name_gtf)
-            print("Here are the lines removed: " + modified_gtf.get_str_modified_lines())
+            logging.info("Here are the lines removed: " + modified_gtf.get_str_modified_lines())
         else:
-            print("- Gtf %s created" % self.name_gtf)
+            logging.info("- Gtf %s created" % self.name_gtf)
 
     def _checkAndFixGtf(self):
         """
