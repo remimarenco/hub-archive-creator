@@ -1,12 +1,11 @@
 #!/usr/bin/python
 
+import logging
 import os
 import tempfile
 
 # Internal dependencies
 from Datatype import Datatype
-from Track import Track
-from TrackDb import TrackDb
 from util import subtools
 
 
@@ -50,24 +49,4 @@ class Bed( Datatype ):
                          track_color=self.track_color,
                          group_name=self.group_name)
 
-        # dataURL = "tracks/%s" % trackName
-        #
-        # trackDb = TrackDb(
-        #     trackName=trackName,
-        #     longLabel=self.name_bed_generic,
-        #     shortLabel=self.getShortName(self.name_bed_generic),
-        #     trackDataURL=dataURL,
-        #     trackType='bigBed',
-        #     visibility='dense',
-        #     thickDrawItem='on',
-        #     priority=self.priority,
-        # )
-        #
-        # # Return the BigBed track
-        # self.track = Track(
-        #     trackFile=myBigBedFilePath,
-        #     trackDb=trackDb,
-        # )
-
-        print("- Bed %s created" % self.name_bed_generic)
-        #print("- %s created in %s" % (trackName, myBigBedFilePath))
+        logging.info("- Bed %s created" % self.name_bed_generic)
