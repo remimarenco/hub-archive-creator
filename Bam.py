@@ -10,9 +10,6 @@ import os
 import shutil
 
 from Datatype import Datatype
-from Track import Track
-from TrackDb import TrackDb
-from util import subtools
 
 
 class Bam( Datatype ):
@@ -57,25 +54,5 @@ class Bam( Datatype ):
                          track_color=self.track_color,
                          group_name=self.group_name
                          )
-        #
-        # dataURL = "tracks/%s" % self.name_bam
-        #
-        # trackDb = TrackDb(
-        #     trackName=self.name_bam,
-        #     longLabel=self.name_bam,
-        #     shortLabel=self.getShortName( self.name_bam ),
-        #     trackDataURL=dataURL,
-        #     trackType='bam',
-        #     visibility='pack',
-        #     priority=self.priority,
-        # )
-        #
-        # # Return the Bam Track Object
-        # self.track = Track(
-        #     trackFile=bam_index_file_path,
-        #     trackDb=trackDb,
-        # )
 
-        print("- Bam %s created" % self.name_bam)
-        #print("- %s created in %s" % (self.name_bam, bam_file_path))
-        #print("- %s created in %s" % (self.index_bam, bam_index_file_path))
+        logging.info("- Bam %s created" % self.name_bam)
